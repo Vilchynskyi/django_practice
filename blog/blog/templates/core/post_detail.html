@@ -1,0 +1,21 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<a href="{% url 'core:index' %}"><h1>На главную</h1><br></a>
+<h2> {{ post.title }} </h2><br>
+<img height="300" src="{{ post_img.image.url }}" alt="Vans">
+<h3> {{ post.desc }} </h3>
+<h3> Date of publication {{ post.date_of_publ }} </h3>
+<h3>Comments:<br></h3>
+{% for comment in list_comments %}
+{{ comment.text }}<br>
+{{ comment.date_of_publ }}<br><br>
+{% endfor %}
+</body>
+</html>

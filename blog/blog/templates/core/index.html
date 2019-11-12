@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MyBlog</title>
+</head>
+<body>
+<h1>Всего постов - {{ post_list|length }}</h1>
+{% for post in post_list %}
+    {% if post.visible is True %}
+        <a href="{{ post.get_absolute_url }}"><h2>{{ post|title }}</h2><br></a>
+        {{ post.short_desc }}
+    {% endif %}
+{% endfor %}
+</body>
+</html>
