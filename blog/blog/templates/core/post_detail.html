@@ -12,6 +12,15 @@
 <img height="300" src="{{ post_img.image.url }}" alt="Vans">
 <h3> {{ post.desc }} </h3>
 <h3> Date of publication {{ post.date_of_publ }} </h3>
+<form class="form-group" action="{% url 'core:add_comment' %}" method="POST">
+  {% csrf_token %}
+  <div class="text-center mb-4">
+  <p class="h3">Add comment</p>
+  </div>
+  <input type="text" name="text" class="form-control" placeholder="Write your comment here" required>
+  <input type="hidden" name="post" value="post" class="form-control">
+  <button class="btn btn-primary btn-block" type="submit">Add comment</button>
+</form>
 <h3>Comments:<br></h3>
 {% for comment in list_comments %}
 {{ comment.text }}<br>

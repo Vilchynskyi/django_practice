@@ -5,12 +5,39 @@
     <title>MyBlog</title>
 </head>
 <body>
-<h1>Всего постов - {{ post_list|length }}</h1>
-{% for post in post_list %}
-    {% if post.visible is True %}
-        <a href="{{ post.get_absolute_url }}"><h2>{{ post|title }}</h2><br></a>
-        {{ post.short_desc }}
+
+{% if user.is_authenticated %}
+    <a class="btn btn-primary" href="{% url 'users:profile' %}">ЛК</a>
+    <a class="btn btn-primary" href="{% url 'users:logout' %}">Выйти</a>
+    <a class="btn btn-primary" href="{% url 'core:write_post' %}">Написать пост</a>
+
+    <h1>Всего постов - {{ post_list|length }}</h1>
+    {% for post in post_list %}
+        {% if post.visible is True %}
+            <a href="{{ post.get_absolute_url }}"><h2>{{ post|title }}</h2><br></a>
+            {{ post.short_desc }}
+
+        {% endif %}
+    {% endfor %}
+{% endif %}
+
+<div>
+    {% if post_list.has_previous %}
+      <a href="?page={{ post.previous_page_number }}"><</a>
     {% endif %}
-{% endfor %}
+
+    {% for page in post_list.paginator.page_range %}
+      {% if page == post_list.number %}
+        {{ page }}
+      {% else %}
+        <a href="?page={{ page }}">{{ page }}</a>
+      {% endif %}
+    {% endfor %}
+
+    {% if post_list.has_next %}
+      <a href="?page={{ post_list.next_page_number }}">></a>
+    {% endif %}
+</div>
+
 </body>
 </html>

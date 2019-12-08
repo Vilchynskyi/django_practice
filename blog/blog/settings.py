@@ -33,6 +33,7 @@ ALLOWED_HOSTS = []
 
 LOCAL_APPS = [
     'apps.core',
+    'apps.users',
 ]
 
 INSTALLED_APPS = [
@@ -42,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'autoslug'
 ] + LOCAL_APPS
 
 MIDDLEWARE = [
@@ -127,3 +129,8 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static_content', 'static')
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'static_content', 'media')
+
+LOGIN_REDIRECT_URL = '/'
+LOGIN_URL = '/users/login/'
+
+AUTH_USER_MODEL = 'users.CustomUser'

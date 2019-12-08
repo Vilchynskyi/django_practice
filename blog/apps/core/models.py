@@ -1,13 +1,25 @@
 from django.db import models
-# from autoslug import AutoSlugField
+from autoslug import AutoSlugField
 from django.utils.text import slugify
 from django.urls import reverse
+from django.contrib.auth import get_user_model
 
 
 class Post(models.Model):
     title = models.CharField(max_length=55, unique=True)
 
-    slug = models.SlugField(default='', blank=True)
+    author_name = models.ForeignKey(
+        get_user_model(),
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True
+    )
+
+    slug = AutoSlugField(
+        populate_from='title',
+        unique=True,
+        null=True
+    )
 
     image = models.ImageField(upload_to='post_img',
                               blank=True,
@@ -37,7 +49,12 @@ class Post(models.Model):
 class Comment(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
 
-    sender_name = models.CharField(max_length=55,blank=True)
+    author_name = models.ForeignKey(
+        get_user_model(),
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True
+    )
 
     text = models.TextField(max_length=255)
 
